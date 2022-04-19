@@ -6,6 +6,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import entities.Product;
+import services.ProductServices;
 
 public class Main {
 
@@ -15,13 +16,31 @@ public class Main {
 		System.out.println("Exemple predicate:");
 		examplePredicate();
 		System.out.println("= - = - = - = - = -");
-		System.out.println("Exemple predicate:");
+		System.out.println("Exemple Consumer:");
 		exampleConsumer();
 		System.out.println("= - = - = - = - = -");
-		System.out.println("Exemple predicate:");
+		System.out.println("Exemple Function:");
 		exampleFunction();
 		System.out.println("= - = - = - = - = -");
+		System.out.println("Using a custom function that receives a function:");
+		exampleFunctionFromFunction();
+		System.out.println("= - = - = - = - = -");
+	}
+	
+	public static void exampleFunctionFromFunction() {
+		List<Product> list = new ArrayList<>();
 
+		list.add(new Product("Tv", 900.00));
+		list.add(new Product("Mouse", 50.00));
+		list.add(new Product("Tablet", 350.50));
+		list.add(new Product("HD Case", 80.90));
+		
+		ProductServices ps = new ProductServices();
+		
+		double sum = ps.filteredSum(list, p->p.getName().charAt(0)=='T');
+		System.out.println("Sum Product with T: " + sum);
+		sum = ps.filteredSum(list, p->p.getPrice()< 100);
+		System.out.println("Sum Product price < 100: " + sum);
 	}
 	
 	public static void exampleFunction() {
